@@ -3,7 +3,6 @@ package PageObjectModel;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,15 +25,13 @@ public class MainPage {
     private By bunsName = By.xpath(".//h2[text()='Булки']");
     //Локатор для "Соусы"
     private By saucesButton = By.xpath("//span[contains(text(), 'Соусы')]");
-    //Локатор для имени "Соус"
-    private By saucesName = By.xpath("//h2[text()='Соусы']");
     //Локатор для "Начинки"
     private By fillingButton = By.xpath("//span[contains(text(), 'Начинки')]");
-    //Локатор для имени "Начинки"
-    private By fillingName = By.xpath("//h2[text()='Начинки']");
+    //Локатор для активного таба
+    private final By activeTab = By.xpath("//div[contains(@class,'tab_tab_type_current')]");
 
-    public MainPage(WebDriver driver){
-        this.driver=driver;
+    public MainPage(WebDriver driver) {
+        this.driver = driver;
     }
 
     @Step("Переход на сайт на главную страницу")
@@ -44,7 +41,7 @@ public class MainPage {
         driver.get(PAGE_URL);
     }
 
-     @Step("Нажимаем на кнопку Войти в аккаунт")
+    @Step("Нажимаем на кнопку Войти в аккаунт")
     public void clickOpenAccount() {
         driver.findElement(openAccountButton).click();
     }
@@ -59,34 +56,25 @@ public class MainPage {
         return driver.findElement(createdOrderButton).getText();
     }
 
-    @Step("Проверка активности раздела Булки")
-    public boolean checkBuns() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(bunsName));
-        return element.isDisplayed();
-    }
-
     @Step("Клик по разделу Булки")
-    public MainPage clickBuns() {
+    public void clickBuns() {
         driver.findElement(bunsButton).click();
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(bunsName));
-        return this;
     }
 
     @Step("Клик по разделу Соусы")
-    public MainPage clickSauces() {
+    public void clickSauces() {
         driver.findElement(saucesButton).click();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(saucesName));
-        return this;
     }
 
     @Step("Клик по разделу Начинки")
-    public MainPage clickFillings() {
+    public void clickFillings() {
         driver.findElement(fillingButton).click();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(fillingName));
-        return this;
+    }
+
+    @Step("Получить название активного таба")
+    public String getActiveTabText() {
+        return driver.findElement(activeTab).getText();
     }
 }

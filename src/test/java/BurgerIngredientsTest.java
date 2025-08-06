@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BurgerIngredientsTest {
     private WebDriver driver;
@@ -30,16 +30,17 @@ public class BurgerIngredientsTest {
     @DisplayName("Раздел Конструктор")
     @Description("Раздел Булки")
     public void switchBuns() {
-        assertTrue(mainPage.checkBuns());
         mainPage.clickSauces();
         mainPage.clickBuns();
+        assertEquals("Булки", mainPage.getActiveTabText());
     }
 
     @Test
     @DisplayName("Раздел Конструктор")
-    @Description("Раздел Начинки")
+    @Description("Раздел Соусы")
     public void switchSauces() {
         mainPage.clickSauces();
+        assertEquals("Соусы", mainPage.getActiveTabText());
     }
 
     @Test
@@ -47,5 +48,6 @@ public class BurgerIngredientsTest {
     @Description("Раздел Начинки")
     public void switchFilling() {
         mainPage.clickFillings();
+        assertEquals("Начинки", mainPage.getActiveTabText());
     }
 }
